@@ -59,6 +59,7 @@ public class MainActivity extends ListActivity {
 			}
         	
 		});
+        mPullRefreshListView.setEnabled(false);
         
         //Ресивер для проверки подключения к сети
         br = new BroadcastReceiver() {
@@ -123,7 +124,7 @@ public class MainActivity extends ListActivity {
     	JsonManager jm = new JsonManager(JSON_URL + "?page=" + page);
     	String json_result = jm.getJsonResult();
     	
-    	ArrayList<Job> arrayJobs = null;
+    	ArrayList<Job> arrayJobs = new ArrayList<Job>();
     	
     	try {
 			JSONObject jo = new JSONObject(json_result);
@@ -132,7 +133,7 @@ public class MainActivity extends ListActivity {
 			JSONArray ja = jo.getJSONArray("jobs");
 			
 			if(ja.length() == 0){ //нет вакансий
-				return new ArrayList<Job>();
+				return arrayJobs;
 			}
 			
 			Job job = null;
